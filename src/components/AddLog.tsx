@@ -69,7 +69,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
         <DrawerHeader>
           <DrawerTitle>Add New</DrawerTitle>
         </DrawerHeader>
-        <div className="p-4 space-y-6">
+        <div className="p-4 space-y-6 overflow-y-auto">
           <div>
             <h3 className="mb-2 text-sm font-medium">Shape</h3>
             <Carousel
@@ -92,7 +92,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
                     >
                       <CardContent className="flex flex-col items-center justify-center p-2 h-full">
                         <img src={shape.icon} alt={shape.name} className="w-16 h-16 mb-2" />
-                        <p className="text-xs text-center">{shape.name}</p>
+                        {/* <p className="text-xs text-center">{shape.name}</p> */}
                       </CardContent>
                     </Card>
                   </CarouselItem>
