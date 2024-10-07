@@ -71,7 +71,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
         </DrawerHeader>
         <div className="p-4 space-y-6 overflow-y-auto">
           <div>
-            <h3 className="mb-2 text-sm font-medium">Shape</h3>
+            <h3 className="mb-2 text-md font-medium">Shape</h3>
             <Carousel
               setApi={(api) => {
                 api?.on('select', () => {
@@ -101,7 +101,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
             </Carousel>
           </div>
           <div>
-            <h3 className="mb-2 text-sm font-medium">Size</h3>
+            <h3 className="mb-2 text-md font-medium">Size</h3>
             <div className="flex flex-wrap gap-2">
               {sizes.map((s) => (
                 <Button
@@ -116,14 +116,14 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
             </div>
           </div>
           <div>
-            <h3 className="mb-2 text-sm font-medium">Color</h3>
+            <h3 className="mb-2 text-md font-medium">Color</h3>
             <div className="flex flex-wrap gap-2">
               {colors.map((c) => (
                 <Button
                   key={c}
                   className={`w-10 h-10 rounded-full relative transition-all ${
                     color === c 
-                      ? 'ring-primary ring-offset-2' 
+                      ? 'ring-primary ring-offset-2 border-2 border-gray' // Add border when selected
                       : 'hover: hover:ring-primary/50 hover:ring-offset-2'
                   }`}
                   style={{ backgroundColor: c }}
@@ -135,7 +135,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
             </div>
           </div>
           <div className="flex justify-between items-center">
-            <Label htmlFor="blood-switch" className="flex items-center gap-2">
+            <Label htmlFor="blood-switch" className="flex items-center gap-2 text-md">
               Blood
             </Label>
             <div className="flex items-center gap-2">
@@ -150,7 +150,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
             </div>
           </div>
           <div className="flex justify-between items-center">
-            <Label htmlFor="pain-switch" className="flex items-center gap-2">
+            <Label htmlFor="pain-switch" className="flex items-center gap-2 text-md">
               Pain
             </Label>
             <div className="flex items-center gap-2">
