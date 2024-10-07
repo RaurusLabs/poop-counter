@@ -16,6 +16,15 @@ const typeToEmoji: { [key: string]: string } = {
   "Diarrhea": "💩",
 }
 
+type LogEntry = {
+  date: string;
+  logs: {
+    type: string;
+    description: string;
+    time: string;
+  }[];
+};
+
 const logData: LogEntry[] = [
   {
     date: "2024-01-22",
@@ -78,13 +87,13 @@ export default function CalendarLogView() {
 
       // Determine button color based on logs and selection
       const buttonColor = hasLogs ? (selectedLogType ? (typeToEmoji[selectedLogType] === typeToEmoji['Diarrhea'] ? 'bg-red-500' : selectedLogType === 'Constipation' ? 'bg-orange-500' : 'bg-brown-500') : 'bg-blue-500') : '';
-      
+
       days.push(
         <Button
           key={i}
           variant={hasLogs ? "default" : "ghost"}
           className={`p-2 ${isToday(new Date(currentDate.getFullYear(), currentDate.getMonth(), i)) ? 'bg-green-500 text-white' : buttonColor}`}
-          onClick={() => hasLogs && setSelectedLogType(hasLogs ? logData.find(entry => entry.date === currentDateString)?.logs[0].type : null)}
+          onClick={() => hasLogs && setSelectedLogType(hasLogs ? logData.find(entry => entry.date === currentDateString)?.logs[0].type || null : null)}
         >
           {i}
         </Button>

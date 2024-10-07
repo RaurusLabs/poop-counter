@@ -40,7 +40,7 @@ export default function Component() {
       <main className="flex-grow overflow-hidden">
         <ScrollArea className="h-full">
           <div className="p-4">
-            <h2 className="text-lg font-semibold mb-2">Today's Logs</h2>
+            <h2 className="text-lg font-semibold mb-2">Today&apos;s Logs</h2>
             {poopLogs.map((log, index) => (
               <Card key={index} className="mb-2">
                 <CardContent className="p-4 flex justify-between items-center">

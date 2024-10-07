@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Plus, Check } from "lucide-react"
+import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Drawer,
@@ -10,7 +10,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer"
 import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
@@ -49,7 +48,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
   const [notes, setNotes] = useState("")
 
   const handleSubmit = () => {
-    console.log({ shape: shapes[shapeIndex].name, size, color, basis, blood, pain, notes })
+    console.log({ shape: shapes[shapeIndex].name, size, color, blood, pain, notes })
     onOpenChange(false)
   }
 
