@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -21,6 +21,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { Card, CardContent } from "@/components/ui/card"
 
 const shapes = [
   { name: "Hard lumps, like stones or nuts", icon: "/icon/1.png?height=80&width=80" },
@@ -46,6 +47,16 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
   const [blood, setBlood] = useState(false)
   const [pain, setPain] = useState(false)
   const [notes, setNotes] = useState("")
+  const [keyboardVisible, setKeyboardVisible] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setKeyboardVisible(window.visualViewport!.height < window.innerHeight)
+    }
+
+    window.visualViewport?.addEventListener('resize', handleResize)
+    return () => window.visualViewport?.removeEventListener('resize', handleResize)
+  }, [])
 
   const handleSubmit = () => {
     console.log({ shape: shapes[shapeIndex].name, size, color, blood, pain, notes })
@@ -54,11 +65,11 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent>
+      <DrawerContent className={keyboardVisible ? 'h-screen' : ''}>
         <DrawerHeader>
           <DrawerTitle>Add New</DrawerTitle>
         </DrawerHeader>
-        <div className="p-4 space-y-6">
+        <div className="p-4 space-y-6 overflow-y-auto">
           <div>
             <h3 className="mb-2 text-sm font-medium">Shape</h3>
             <Carousel
@@ -70,9 +81,13 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
             >
               <CarouselContent>
                 {shapes.map((shape, index) => (
-                  <CarouselItem key={index} className="basis-1/4 flex flex-col items-center">
-                    <img src={shape.icon} alt={shape.name} className="w-20 h-20 mb-2" />
-                    <p className="text-sm text-center">{shape.name}</p>
+                  <CarouselItem key={index} className="basis-1/3 sm:basis-1/4 md:basis-1/5">
+                    <Card className={`h-full ${shapeIndex === index ? 'border-primary' : ''}`}>
+                      <CardContent className="flex flex-col items-center justify-center p-2 h-full">
+                        <img src={shape.icon} alt={shape.name} className="w-16 h-16 mb-2" />
+                        <p className="text-xs text-center">{shape.name}</p>
+                      </CardContent>
+                    </Card>
                   </CarouselItem>
                 ))}
               </CarouselContent>
@@ -86,8 +101,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
               {sizes.map((s) => (
                 <Button
                   key={s}
-                  variant="outline"
-                  className={size === s ? 'border-primary' : ''}
+                  variant={size === s ? "default" : "outline"}
                   onClick={() => setSize(s)}
                 >
                   {s}
@@ -101,11 +115,11 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
               {colors.map((c) => (
                 <Button
                   key={c}
-                  className={`w-8 h-8 rounded-full relative ${color === c ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+                  className={`w-10 h-10 rounded-full relative ${color === c ? 'ring-2 ring-primary ring-offset-2' : ''}`}
                   style={{ backgroundColor: c }}
                   onClick={() => setColor(c)}
                 >
-                  {color === c && <Check className="absolute inset-0 m-auto text-white" size={16} />}
+                  {color === c && <Check className="absolute inset-0 m-auto text-white" size={20} />}
                 </Button>
               ))}
             </div>
@@ -113,33 +127,38 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
           <div className="flex justify-between items-center">
             <Label htmlFor="blood-switch" className="flex items-center gap-2">
               Blood
+            </Label>
+            <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">
                 {blood ? 'Yes' : 'No'}
               </span>
-            </Label>
-            <Switch
-              id="blood-switch"
-              checked={blood}
-              onCheckedChange={setBlood}
-            />
+              <Switch
+                id="blood-switch"
+                checked={blood}
+                onCheckedChange={setBlood}
+              />
+            </div>
           </div>
           <div className="flex justify-between items-center">
             <Label htmlFor="pain-switch" className="flex items-center gap-2">
               Pain
+            </Label>
+            <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">
                 {pain ? 'Yes' : 'No'}
               </span>
-            </Label>
-            <Switch
-              id="pain-switch"
-              checked={pain}
-              onCheckedChange={setPain}
-            />
+              <Switch
+                id="pain-switch"
+                checked={pain}
+                onCheckedChange={setPain}
+              />
+            </div>
           </div>
           <Textarea
             placeholder="Notes"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
+            className="min-h-[100px]"
           />
         </div>
         <DrawerFooter>
