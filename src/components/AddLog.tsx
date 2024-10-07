@@ -119,38 +119,38 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
             </Carousel>
             {/* Modal for additional info */}
             {isModalOpen && (
-              <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
-                <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-                  {/* Added padding via p-6 for the modal */}
-                  <h3 className="text-lg font-semibold mb-4">Shape Information</h3>
-                  <p className="text-sm text-gray-700 mb-4">
-                    The shape of your stool can indicate the health of your digestive system. 
-                    Here are some general insights about different stool shapes and what they may signify:
-                  </p>
-                  <ul className="list-disc list-inside mb-4">
-                    {shapes.map((shape, index) => (
-                      <li key={index} className="text-sm text-gray-600">
-                        {shape.name}
-                      </li>
-                    ))}
-                  </ul>
-                  {/* Source link */}
-                  <p className="text-sm text-gray-500">
-                    Source: <a href="https://www.continence.org.au/bristol-stool-chart" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
-                      Bristol Stool Chart
-                    </a>
-                  </p>
-                  <div className="mt-4 text-right">
-                    <button 
-                      className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark"
-                      onClick={closeModal}
-                    >
-                      Close
-                    </button>
-                  </div>
+            <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
+              <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-md mx-4 sm:mx-0"> 
+                {/* Added responsive padding and horizontal margin */}
+                <h3 className="text-lg font-semibold mb-4">Shape Information</h3>
+                <p className="text-sm text-gray-700 mb-4">
+                  The shape of your stool can indicate the health of your digestive system. 
+                  Here are some general insights about different stool shapes and what they may signify:
+                </p>
+                <ul className="list-disc list-inside mb-4">
+                  {shapes.map((shape, index) => (
+                    <li key={index} className="text-sm text-gray-600">
+                      {shape.name}
+                    </li>
+                  ))}
+                </ul>
+                {/* Source link */}
+                <p className="text-sm text-gray-500">
+                  Source: <a href="https://www.continence.org.au/bristol-stool-chart" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                    Bristol Stool Chart
+                  </a>
+                </p>
+                <div className="mt-4 text-right">
+                  <button 
+                    className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark"
+                    onClick={closeModal}
+                  >
+                    Close
+                  </button>
                 </div>
               </div>
-            )}
+            </div>
+          )}
           </div>
           <div>
             <h3 className="mb-2 text-md font-medium">Size</h3>
