@@ -98,8 +98,6 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
             </Carousel>
           </div>
           <div>
