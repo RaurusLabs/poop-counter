@@ -69,7 +69,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
         <DrawerHeader>
           <DrawerTitle>Add New</DrawerTitle>
         </DrawerHeader>
-        <div className="p-4 space-y-6 overflow-y-auto">
+        <div className="p-4 space-y-6">
           <div>
             <h3 className="mb-2 text-sm font-medium">Shape</h3>
             <Carousel
@@ -81,7 +81,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
             >
               <CarouselContent>
                 {shapes.map((shape, index) => (
-                  <CarouselItem key={index} className="basis-1/3 sm:basis-1/4 md:basis-1/5">
+                  <CarouselItem key={index} className="basis-1/4 sm:basis-1/4 md:basis-1/5">
                     <Card 
                       className={`h-full cursor-pointer transition-all ${
                         shapeIndex === index 
