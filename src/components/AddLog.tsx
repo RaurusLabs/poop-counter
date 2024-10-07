@@ -41,7 +41,8 @@ interface AddLogProps {
 }
 
 export default function AddLog({ open, onOpenChange }: AddLogProps) {
-  const [shapeIndex, setShapeIndex] = useState(0)
+  const [shapeIndex, setShapeIndex] = useState(2)
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
   const [size, setSize] = useState("")
   const [color, setColor] = useState("")
   const [blood, setBlood] = useState(false)
@@ -63,6 +64,9 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
     onOpenChange(false)
   }
 
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className={keyboardVisible ? 'h-screen' : ''}>
@@ -71,7 +75,21 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
         </DrawerHeader>
         <div className="p-4 space-y-6 overflow-y-auto">
           <div>
-            <h3 className="mb-2 text-md font-medium">Shape</h3>
+          <h3 className="mb-2 text-md font-medium flex items-center">
+            Shape 
+            <button 
+              className="ml-2 text-gray-500 hover:text-gray-700"
+              onClick={openModal}
+              aria-label="More information about shape types"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 2a7 7 0 100 14A7 7 0 009 2zM8 11V9h2v2H8zm0-3V6h2v2H8z" />
+              </svg>
+            </button>
+          </h3>
+            {shapeIndex !== null && (
+              <p className="text-sm text-gray-500 mb-4">{shapes[shapeIndex].name}</p>
+            )}
             <Carousel
               setApi={(api) => {
                 api?.on('select', () => {
@@ -99,6 +117,33 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
                 ))}
               </CarouselContent>
             </Carousel>
+            {/* Modal for additional info */}
+            {isModalOpen && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
+                <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+                  <h3 className="text-lg font-semibold mb-4">Shape Information</h3>
+                  <p className="text-sm text-gray-700 mb-4">
+                    The shape of your stool can indicate the health of your digestive system. 
+                    Here are some general insights about different stool shapes and what they may signify:
+                  </p>
+                  <ul className="list-disc list-inside">
+                    {shapes.map((shape, index) => (
+                      <li key={index} className="text-sm text-gray-600">
+                        {shape.name}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-4 text-right">
+                    <button 
+                      className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark"
+                      onClick={closeModal}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <div>
             <h3 className="mb-2 text-md font-medium">Size</h3>
@@ -168,7 +213,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
             placeholder="Notes"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="min-h-[100px]"
+            className="min-h-[50px]"
           />
         </div>
         <DrawerFooter>
