@@ -73,7 +73,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
         <DrawerHeader>
           <DrawerTitle>Add New</DrawerTitle>
         </DrawerHeader>
-        <div className="p-4 space-y-6 overflow-y-auto">
+        <div className="w-full max-w-md mx-auto p-4 space-y-6 overflow-y-auto">
           <div>
           <h3 className="mb-2 text-md font-medium flex items-center">
             Shape 
@@ -223,7 +223,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
             className="min-h-[50px]"
           />
         </div>
-        <DrawerFooter>
+        <DrawerFooter className="w-full max-w-md mx-auto">
           <Button onClick={handleSubmit}>Add Entry</Button>
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
