@@ -82,7 +82,14 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
               <CarouselContent>
                 {shapes.map((shape, index) => (
                   <CarouselItem key={index} className="basis-1/3 sm:basis-1/4 md:basis-1/5">
-                    <Card className={`h-full ${shapeIndex === index ? 'border-primary' : ''}`}>
+                    <Card 
+                      className={`h-full cursor-pointer transition-all ${
+                        shapeIndex === index 
+                          ? 'border-primary ring-primary ring-offset-2' 
+                          : 'hover:border-primary/50'
+                      }`}
+                      onClick={() => setShapeIndex(index)}
+                    >
                       <CardContent className="flex flex-col items-center justify-center p-2 h-full">
                         <img src={shape.icon} alt={shape.name} className="w-16 h-16 mb-2" />
                         <p className="text-xs text-center">{shape.name}</p>
@@ -102,6 +109,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
                 <Button
                   key={s}
                   variant={size === s ? "default" : "outline"}
+                  className={size === s ? 'ring-primary ring-offset-2' : 'hover:border-primary/50'}
                   onClick={() => setSize(s)}
                 >
                   {s}
@@ -115,7 +123,11 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
               {colors.map((c) => (
                 <Button
                   key={c}
-                  className={`w-10 h-10 rounded-full relative ${color === c ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+                  className={`w-10 h-10 rounded-full relative transition-all ${
+                    color === c 
+                      ? 'ring-primary ring-offset-2' 
+                      : 'hover: hover:ring-primary/50 hover:ring-offset-2'
+                  }`}
                   style={{ backgroundColor: c }}
                   onClick={() => setColor(c)}
                 >
