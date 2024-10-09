@@ -86,13 +86,25 @@ export default function CalendarLogView() {
       const hasLogs = logData.some(entry => entry.date === currentDateString)
 
       // Determine button color based on logs and selection
-      const buttonColor = hasLogs ? (selectedLogType ? (typeToEmoji[selectedLogType] === typeToEmoji['Diarrhea'] ? 'bg-red-500' : selectedLogType === 'Constipation' ? 'bg-orange-500' : 'bg-brown-500') : 'bg-blue-500') : '';
+      const buttonColor = hasLogs 
+        ? (selectedLogType 
+          ? (typeToEmoji[selectedLogType] === typeToEmoji['Diarrhea'] 
+            ? 'bg-red-500 dark:bg-red-700' 
+            : selectedLogType === 'Constipation' 
+              ? 'bg-orange-500 dark:bg-orange-700' 
+              : 'bg-brown-500 dark:bg-brown-700') 
+          : 'bg-blue-500 dark:bg-blue-700') 
+        : '';
 
       days.push(
         <Button
           key={i}
           variant={hasLogs ? "default" : "ghost"}
-          className={`p-2 ${isToday(new Date(currentDate.getFullYear(), currentDate.getMonth(), i)) ? 'bg-green-500 text-white' : buttonColor}`}
+          className={`p-2 ${
+            isToday(new Date(currentDate.getFullYear(), currentDate.getMonth(), i)) 
+              ? 'bg-green-500 dark:bg-green-700 text-white dark:text-gray-200' 
+              : buttonColor
+          }`}
           onClick={() => hasLogs && setSelectedLogType(hasLogs ? logData.find(entry => entry.date === currentDateString)?.logs[0].type || null : null)}
         >
           {i}
@@ -104,8 +116,8 @@ export default function CalendarLogView() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      <header className="bg-white p-4 flex justify-between items-center border-b">
+    <div className="flex flex-col h-screen bg-background text-foreground">
+      <header className="bg-card p-4 flex justify-between items-center border-b">
         <Link href="/">
           <Button variant="ghost" size="icon">
             <ArrowLeft className="h-5 w-5" />
@@ -133,7 +145,7 @@ export default function CalendarLogView() {
                 </div>
                 <div className="grid grid-cols-7 gap-1 text-center">
                   {daysOfWeek.map(day => (
-                    <div key={day} className="text-sm font-medium text-gray-500">{day}</div>
+                    <div key={day} className="text-sm font-medium text-muted-foreground">{day}</div>
                   ))}
                   {renderCalendar()}
                 </div>
@@ -150,10 +162,10 @@ export default function CalendarLogView() {
                         <span className="text-2xl">{typeToEmoji[log.type]}</span>
                         <div>
                           <p className="font-medium">{log.type}</p>
-                          <p className="text-sm text-gray-500">{log.description}</p>
+                          <p className="text-sm text-muted-foreground">{log.description}</p>
                         </div>
                       </div>
-                      <span className="text-sm text-gray-500">{log.time}</span>
+                      <span className="text-sm text-muted-foreground">{log.time}</span>
                     </CardContent>
                   </Card>
                 ))}

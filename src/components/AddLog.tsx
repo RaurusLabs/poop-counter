@@ -18,8 +18,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -38,11 +36,12 @@ const colors = ["#D2B48C", "#8B4513", "#A0522D", "#000000", "#DAA520", "#556B2F"
 interface AddLogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  onAddLog: (logEntry: any) => void
 }
 
-export default function AddLog({ open, onOpenChange }: AddLogProps) {
+export default function AddLog({ open, onOpenChange, onAddLog }: AddLogProps) {
   const [shapeIndex, setShapeIndex] = useState(2)
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [size, setSize] = useState("")
   const [color, setColor] = useState("")
   const [blood, setBlood] = useState(false)
@@ -60,12 +59,29 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
   }, [])
 
   const handleSubmit = () => {
-    console.log({ shape: shapes[shapeIndex].name, size, color, blood, pain, notes })
+    const newLogEntry = {
+      shape: shapes[shapeIndex].name,
+      size,
+      color,
+      blood,
+      pain,
+      notes,
+      time: new Date().toLocaleTimeString(),
+      date: new Date().toLocaleDateString()
+    }
+    onAddLog(newLogEntry)
     onOpenChange(false)
+    // Reset form fields
+    setShapeIndex(2)
+    setSize("")
+    setColor("")
+    setBlood(false)
+    setPain(false)
+    setNotes("")
   }
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
@@ -110,43 +126,38 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
                     >
                       <CardContent className="flex flex-col items-center justify-center p-2 h-full">
                         <img src={shape.icon} alt={shape.name} className="w-16 h-16 mb-2" />
-                        {/* <p className="text-xs text-center">{shape.name}</p> */}
                       </CardContent>
                     </Card>
                   </CarouselItem>
                 ))}
               </CarouselContent>
             </Carousel>
-            {/* Modal for additional info */}
             {isModalOpen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
-              <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-md mx-4 sm:mx-0"> 
-                {/* Added responsive padding and horizontal margin */}
+            <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900/50 dark:bg-gray-900/80">
+              <div className="bg-background text-foreground rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-md mx-4 sm:mx-0">
                 <h3 className="text-lg font-semibold mb-4">Shape Information</h3>
-                <p className="text-sm text-gray-700 mb-4">
+                <p className="text-sm text-muted-foreground mb-4">
                   The shape of your stool can indicate the health of your digestive system. 
                   Here are some general insights about different stool shapes and what they may signify:
                 </p>
                 <ul className="list-disc list-inside mb-4">
                   {shapes.map((shape, index) => (
-                    <li key={index} className="text-sm text-gray-600">
+                    <li key={index} className="text-sm text-muted-foreground">
                       {shape.name}
                     </li>
                   ))}
                 </ul>
-                {/* Source link */}
-                <p className="text-sm text-gray-500">
-                  Source: <a href="https://www.continence.org.au/bristol-stool-chart" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                <p className="text-sm text-muted-foreground">
+                  Source: <a href="https://www.continence.org.au/bristol-stool-chart" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
                     Bristol Stool Chart
                   </a>
                 </p>
                 <div className="mt-4 text-right">
-                  <button 
-                    className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark"
+                  <Button 
                     onClick={closeModal}
                   >
                     Close
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -175,7 +186,7 @@ export default function AddLog({ open, onOpenChange }: AddLogProps) {
                   key={c}
                   className={`w-10 h-10 rounded-full relative transition-all ${
                     color === c 
-                      ? 'ring-primary ring-offset-2 border-2 border-gray' // Add border when selected
+                      ? 'ring-primary ring-offset-2 border-2 border-gray'
                       : 'hover: hover:ring-primary/50 hover:ring-offset-2'
                   }`}
                   style={{ backgroundColor: c }}
