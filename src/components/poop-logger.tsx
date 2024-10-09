@@ -87,10 +87,10 @@ export default function Component() {
                     />
                   )}
                 </div>
-                <Button variant="outline" className="w-full" onClick={() => window.open('mailto:support@pooplogger.com?subject=Bug%20Report')}>
+                <Button variant="outline" className="w-full" onClick={() => window.open('mailto:tobidsn@gmail.com?subject=Bug%20Report')}>
                   <BugPlay className="mr-2 h-4 w-4" /> Report a Bug
                 </Button>
-                <Button variant="outline" className="w-full" onClick={() => alert('Poop Logger v1.0\nDeveloped with ❤️ by Your Team')}>
+                <Button variant="outline" className="w-full" onClick={() => alert('Poop Logger v1.0\nDeveloped with ❤️ by tobidsn')}>
                   <Info className="mr-2 h-4 w-4" /> About
                 </Button>
               </div>
